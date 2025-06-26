@@ -24,9 +24,9 @@ public enum Command {
         Path execute(Path path) throws IOException {
 
             // TODO implementar conforme enunciado
-            try(DirectoryStream<Path> dir = Files.newDirectoryStream(path)){
+            try (DirectoryStream<Path> dir = Files.newDirectoryStream(path)) {
                 System.out.println("Contents of " + path.toAbsolutePath());
-                for (Path p : dir){
+                for (Path p : dir) {
                     System.out.println(" " + p.getFileName());
                 }
             }
@@ -51,16 +51,20 @@ public enum Command {
         Path execute(Path path) throws IOException {
 
             // TODO implementar conforme enunciado
+            if (parameters.length < 2) {
+                throw new UnsupportedOperationException("this command needs a param");
+            }
+
             String nomeArq = parameters[1];
             Path concat = path.resolve(nomeArq);
 
-            if (!Files.exists(concat)){
+            if (!Files.exists(concat)) {
                 throw new UnsupportedOperationException("file not found");
             }
-            if (Files.isDirectory(concat)){
+            if (Files.isDirectory(concat)) {
                 throw new UnsupportedOperationException("this command should be used with files only");
             }
-            if (!nomeArq.toLowerCase().endsWith(".txt")){
+            if (!nomeArq.toLowerCase().endsWith(".txt")) {
                 throw new UnsupportedOperationException("Extension not supported");
             }
 
@@ -84,10 +88,10 @@ public enum Command {
 
             Path dirPai = path.getParent();
 
-            if (dirPai == null){
+            if (dirPai == null) {
                 return path;
             }
-            if (!dirPai.startsWith(raiz)){
+            if (!dirPai.startsWith(raiz)) {
                 return path;
             }
 
@@ -115,13 +119,17 @@ public enum Command {
         Path execute(Path path) {
 
             // TODO implementar conforme enunciado
+            if (parameters.length < 2) {
+                throw new UnsupportedOperationException("this command needs a param");
+            }
+
             String dir = parameters[1].trim();
             Path reDir = path.resolve(dir).normalize();
 
-            if (!Files.exists(reDir)){
+            if (!Files.exists(reDir)) {
                 throw new UnsupportedOperationException("path not found");
             }
-            if (!Files.isDirectory(reDir)){
+            if (!Files.isDirectory(reDir)) {
                 throw new UnsupportedOperationException("path is not a directory");
             }
 
@@ -146,10 +154,14 @@ public enum Command {
         Path execute(Path path) throws IOException {
 
             // TODO implementar conforme enunciado
+            if (parameters.length < 2) {
+                throw new UnsupportedOperationException("this command needs a param");
+            }
+
             String arq = parameters[1].trim();
             Path dir = path.resolve(arq).normalize();
 
-            if (!Files.exists(dir)){
+            if (!Files.exists(dir)) {
                 throw new UnsupportedOperationException("file not found");
             }
             BasicFileAttributeView view = Files.getFileAttributeView(dir, BasicFileAttributeView.class);
